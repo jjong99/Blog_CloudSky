@@ -1,5 +1,6 @@
 package com.example.cloudsky.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,10 +17,10 @@ import java.util.List;
 public class User {
 
     @Id
-    @Column(name = "user_id", nullable = false, unique = true)
-    private String user_id;
+    @Column(name = "id", nullable = false, unique = true)
+    private String id;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password", nullable = false, unique = true)
     private String password;
 
     @Column(name = "username", nullable = false)
@@ -28,7 +29,18 @@ public class User {
     @Column(name = "introduction")
     private String introduction;
 
-    @OneToMany(mappedBy = "user")
-    private List<Post> postList = new ArrayList<>();
+//    @OneToMany(mappedBy = "user")
+//    private List<Post> postList = new ArrayList<>();
 
+    @Column(nullable = true)
+    @Enumerated(value = EnumType.STRING)
+    @JsonIgnore
+    private UserRoleEnum role;
+
+    public User(String id, String password, String username, String introduction) {
+        this.id = id;
+        this.password = password;
+        this.username = username;
+        this.introduction = introduction;
+    }
 }

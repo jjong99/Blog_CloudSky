@@ -1,14 +1,42 @@
 package com.example.cloudsky.controller;
 
+import com.example.cloudsky.dto.ApiResponseDto;
+import com.example.cloudsky.dto.LoginRequestDto;
+import com.example.cloudsky.dto.SignupRequestDto;
+import com.example.cloudsky.jwt.JwtUtil;
 import com.example.cloudsky.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/dev/user")
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
+    private final JwtUtil jwtUtil;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
+    // 회원가입
+    @PostMapping("/signup")
+    public ResponseEntity<ApiResponseDto> signup(@Valid @RequestBody SignupRequestDto requestDto) {
+        userService.signup(requestDto);
+        return ResponseEntity.status(201).body(new ApiResponseDto("회원가입 성공", HttpStatus.CREATED.value()));
+    }
+
+    // 로그인
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponseDto> login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
+        userService.login(loginRequestDto);
+        //JWT 생성 및 쿠키에 저장 후 Response 객체에 추가
+        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(loginRequestDto.getId()));
+
+        return ResponseEntity.ok().body(new ApiResponseDto("로그인 성공", HttpStatus.CREATED.value()));
     }
 }
