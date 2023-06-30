@@ -32,6 +32,7 @@ public class User {
 //    @OneToMany(mappedBy = "user")
 //    private List<Post> postList = new ArrayList<>();
 
+    @Transient
     @Column(nullable = true)
     @Enumerated(value = EnumType.STRING)
     @JsonIgnore
