@@ -24,8 +24,8 @@ public class PostTest {
         Post post = new Post();
         User user = new User();
 
-        user.setUser_id("id");
         user.setUsername("username");
+        user.setRealname("닉네임");
         user.setPassword("password");
         user.setIntroduction("introduction");
         user.setRole(UserRoleEnum.USER);
