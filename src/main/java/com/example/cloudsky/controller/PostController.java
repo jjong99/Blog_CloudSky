@@ -20,11 +20,11 @@ public class PostController {
     }
 
 
-    // 선택 게시글 조회
-    @GetMapping("/post/{id}")
-    public PostResponseDto getOnePost(@PathVariable Long id) {
-        return postService.getOnePost(id);
-    }
+//     선택 게시글 조회
+//    @GetMapping("/post/{id}")
+//    public PostResponseDto getOnePost(@PathVariable Long id) {
+//        return postService.getOnePost(id);
+//    }
 
     // 게시글 작성
     @PostMapping("/post")

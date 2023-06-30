@@ -28,6 +28,10 @@ public class User {
     @Column(name = "introduction")
     private String introduction;
 
+    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private UserRoleEnum role;
+
     @OneToMany(mappedBy = "user")
     private List<Post> postList = new ArrayList<>();
 
