@@ -1,10 +1,7 @@
 package com.example.cloudsky.entity;
 
 public enum UserRoleEnum {
-
-
     USER(Authority.USER),
-
     ADMIN(Authority.ADMIN);
 
     private final String authority;

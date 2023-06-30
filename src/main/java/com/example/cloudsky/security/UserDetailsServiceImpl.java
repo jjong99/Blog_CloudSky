@@ -2,7 +2,6 @@ package com.example.cloudsky.security;
 
 import com.example.cloudsky.entity.User;
 import com.example.cloudsky.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
