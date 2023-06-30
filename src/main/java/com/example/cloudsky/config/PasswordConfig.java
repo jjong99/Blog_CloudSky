@@ -10,3 +10,4 @@ public class PasswordConfig {
     @Bean
     public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
 }
+// 말 그대로 비밀번호 인코더 입니다.

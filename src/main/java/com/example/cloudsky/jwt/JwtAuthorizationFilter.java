@@ -75,3 +75,4 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
 }
+// JwtAuthenticationFilter 에 쓰기 위해 인증하는 파일입니다.

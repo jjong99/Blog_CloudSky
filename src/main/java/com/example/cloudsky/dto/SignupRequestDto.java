@@ -20,3 +20,4 @@ public class SignupRequestDto {
 
     private String introduction;
 }
+// 회원가입  할 때 이 모양의 json 형식으로 정보를 입력하시면 됩니다.

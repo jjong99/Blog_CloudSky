@@ -60,3 +60,4 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.setStatus(401);
     }
 }
+// 여기는 보시는 대로 로그인 한 유저의 토큰을 생성하는 파일입니다.

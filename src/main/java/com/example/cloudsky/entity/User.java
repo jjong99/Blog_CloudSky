@@ -47,3 +47,4 @@ public class User {
         this.role = role;
     }
 }
+// role을 없애는 대신 모든 유저의 권한을 USER 로 설정하도록 했습니다.
