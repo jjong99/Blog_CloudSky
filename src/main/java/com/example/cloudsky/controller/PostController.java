@@ -4,6 +4,7 @@ import com.example.cloudsky.dto.PostRequestDto;
 import com.example.cloudsky.dto.PostResponseDto;
 import com.example.cloudsky.security.UserDetailsImpl;
 import com.example.cloudsky.service.PostService;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -21,27 +22,27 @@ public class PostController {
 
     // 선택 게시글 조회
     @GetMapping("/post/{id}")
-    public PostResponseDto getonePost(@RequestBody PostRequestDto requestDto) {
-        return postService.getonePost(requestDto);
+    public PostResponseDto getOnePost(@PathVariable Long id) {
+        return postService.getOnePost(id);
     }
 
     // 게시글 작성
-//    @PostMapping("/post")
-//    public PostResponseDto createPost() {
-//
-//    }
-//
-//    // 게시글 수정
-//    @Transactional
-//    @PutMapping("/post/{id}")
-//    public PostResponseDto updatePost() {
-//
-//    }
+    @PostMapping("/post")
+    public PostResponseDto createPost(@RequestBody PostRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return postService.createPost(requestDto, userDetails.getUser());
+    }
+
+    // 게시글 수정
+    @Transactional
+    @PutMapping("/post/{id}")
+    public PostResponseDto updatePost(@PathVariable Long id, @RequestBody PostRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return postService.updatePost(id, requestDto, userDetails.getUser());
+    }
 
     // 게시글 삭제
     @DeleteMapping("/post/{id}")
-    public void deletePost() {
-
+    public void deletePost(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        postService.deletePost(id, userDetails.getUser());
     }
 
 }

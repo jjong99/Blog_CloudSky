@@ -1,5 +1,6 @@
 package com.example.cloudsky.entity;
 
+import com.example.cloudsky.dto.PostRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,15 @@ public class Post extends Timestamped{
     @JoinColumn(name = "user_id")
     private User user;
 
+    public Post(PostRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.content = requestDto.getContent();
+    }
 
+    // 게시글 수정 메소드
+    public void update(PostRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.content = requestDto.getContent();
+    }
 
 }
