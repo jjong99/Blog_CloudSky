@@ -38,6 +38,8 @@ public class UserService {
         userRepository.save(user);
     }
 
+
+    // 프로필 조회
     public ProfileResponseDto getMyPage(User user) {
         return new ProfileResponseDto(user);
     }
@@ -50,14 +52,14 @@ public class UserService {
         return new ProfileResponseDto(user);
     }
 
-    @Transactional
     // 비밀번호 변경
+    @Transactional
     public void updatePassword(UserDetailsImpl userDetails, PasswordRequestDto password, PasswordRequestDto newpassword) {
         User user = userDetails.getUser();
 
         if(!passwordEncoder.matches(password.getPassword(), userDetails.getPassword())) {
             throw new RejectedExecutionException();
         }
-        user.setPassword(newpassword.getPassword());
+        user.setPassword(newpassword.getNewpassword());
     }
 }
