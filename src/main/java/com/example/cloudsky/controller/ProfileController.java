@@ -27,21 +27,21 @@ public class ProfileController {
         return userService.getMyPage(userDetails.getUser());
     }
 
-    // 비밀번호 변경
-    @PutMapping("/profile/password")
-    public ResponseEntity<ApiResponseDto> updatePassword(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody PasswordRequestDto password, @RequestBody PasswordRequestDto newpassword) {
-        try {
-            userService.updatePassword(userDetails, password, newpassword);
-            return ResponseEntity.ok().body(new ApiResponseDto("게시글 삭제 성공", HttpStatus.OK.value()));
-        } catch (RejectedExecutionException e) {
-            return ResponseEntity.badRequest().body(new ApiResponseDto("비밀번호가 일치하지 않습니다.", HttpStatus.BAD_REQUEST.value()));
-        }
-    }
-
     // 프로필 수정
     @PutMapping("/profile")
     public ProfileResponseDto updateProfile(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody ProfileRequestDto profileRequestDto) {
         return userService.updateProfile(userDetails.getUser(), profileRequestDto);
+    }
+
+    // 비밀번호 변경
+    @PutMapping("/profile/password")
+    public ResponseEntity<ApiResponseDto> updatePassword(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody PasswordRequestDto passwordRequestDto) {
+        try {
+            userService.updatePassword(userDetails, passwordRequestDto);
+            return ResponseEntity.ok().body(new ApiResponseDto("비밀번호 변경 성공", HttpStatus.OK.value()));
+        } catch (RejectedExecutionException e) {
+            return ResponseEntity.badRequest().body(new ApiResponseDto("비밀번호가 일치하지 않습니다.", HttpStatus.BAD_REQUEST.value()));
+        }
     }
 
 }
