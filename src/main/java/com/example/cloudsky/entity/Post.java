@@ -22,7 +22,6 @@ public class Post extends Timestamped{
     @Column(name = "content", nullable = false)
     private String content;
     @Column(name = "like_count", nullable = false)
-    @ColumnDefault("0")
     private Integer likeCount;
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -31,6 +30,7 @@ public class Post extends Timestamped{
     public Post(PostRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
+        this.likeCount = 0;
     }
 
     // 게시글 수정 메소드

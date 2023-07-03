@@ -1,6 +1,5 @@
 package com.example.cloudsky.entity;
 
-import com.example.cloudsky.security.UserDetailsImpl;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,8 +22,8 @@ public class Like {
     @JoinColumn(name = "post_id")
     private Post post;
 
-    public Like(UserDetailsImpl userDetails, Post post) {
-        this.user = userDetails.getUser();
+    public Like(User user, Post post) {
+        this.user = user;
         this.post = post;
     }
 }
