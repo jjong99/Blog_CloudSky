@@ -31,7 +31,7 @@ public class User {
     @Column(name = "introduction")
     private String introduction;
 
-    @OneToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "user")
     private List<Post> postList = new ArrayList<>();
 
     @Column(nullable = false)
