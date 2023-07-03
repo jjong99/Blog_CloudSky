@@ -1,46 +1,41 @@
 package com.example.cloudsky.controller;
 
-import com.example.cloudsky.dto.PostRequestDto;
-import com.example.cloudsky.dto.PostResponseDto;
-import com.example.cloudsky.security.UserDetailsImpl;
+import com.example.cloudsky.entity.Post;
 import com.example.cloudsky.service.PostService;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 @RestController
-@RequestMapping("/dev")
 public class PostController {
+
     private final PostService postService;
+
     public PostController(PostService postService) {
         this.postService = postService;
     }
 
-
-    // 선택 게시글 조회
-    @GetMapping("/post/{id}")
-    public PostResponseDto getOnePost(@PathVariable Long id) {
-        return postService.getOnePost(id);
+    // 게시글 목록 조회
+    @GetMapping("/dev")
+    public List<Post> getPosts() {
+        return postService.getPosts();
     }
-//     선택 게시글 조회
-//    @GetMapping("/post/{id}")
-//    public PostResponseDto getOnePost(@PathVariable Long id) {
-//        return postService.getOnePost(id);
-//    }
 
     // 게시글 작성
-    @PostMapping("/post")
-    public PostResponseDto createPost(@RequestBody PostRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return postService.createPost(requestDto, userDetails.getUser());
+    @PostMapping("/dev/post")
+    public Post createPost(@RequestBody PostDto postDto) {
+        return postService.createPost(postDto);
     }
+
     // 게시글 수정
-    @Transactional
-    @PutMapping("/post/{id}")
-    public PostResponseDto updatePost(@PathVariable Long id, @RequestBody PostRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return postService.updatePost(id, requestDto, userDetails.getUser());
+    @PutMapping("/dev/post/{id}")
+    public Post updatePost(@PathVariable Long id, @RequestBody PostDto postDto) {
+        return postService.updatePost(id, postDto);
     }
+
     // 게시글 삭제
-    @DeleteMapping("/post/{id}")
-    public void deletePost(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        postService.deletePost(id, userDetails.getUser());
+    @DeleteMapping("/dev/post/{id}")
+    public void deletePost(@PathVariable Long id) {
+        postService.deletePost(id);
     }
 }

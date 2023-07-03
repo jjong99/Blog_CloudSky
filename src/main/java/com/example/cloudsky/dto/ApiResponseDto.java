@@ -17,4 +17,23 @@ public class ApiResponseDto {
         this.msg = msg;
         this.statusCode = statusCode;
     }
+
+    // PostDto
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    public static class PostDto {
+        private String title;
+        private String content;
+    }
+
+    // UserDto
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    public static class UserDto {
+        private String username;
+        private String password;
+        private String email;
+    }
 }
