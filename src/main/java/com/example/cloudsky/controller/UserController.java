@@ -3,11 +3,14 @@ package com.example.cloudsky.controller;
 import com.example.cloudsky.dto.ApiResponseDto;
 import com.example.cloudsky.dto.SignupRequestDto;
 import com.example.cloudsky.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,8 +31,8 @@ public class UserController {
     }
 
     @RequestMapping("/logout")
-    public ResponseEntity<ApiResponseDto> logout(HttpServletResponse response) {
-        userService.logout(response);
-        return ResponseEntity.status(201).body(new ApiResponseDto("로그아웃 성공", HttpStatus.CREATED.value()));
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
+        return "redirect:login";
     }
 }
