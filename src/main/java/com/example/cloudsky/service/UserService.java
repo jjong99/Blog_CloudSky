@@ -50,6 +50,7 @@ public class UserService {
     public ProfileResponseDto updateProfile(User user, ProfileRequestDto profileRequestDto) {
         user.setRealname(profileRequestDto.getRealname());
         user.setIntroduction(profileRequestDto.getIntroduction());
+        userRepository.save(user);
         return new ProfileResponseDto(user);
     }
 
@@ -62,6 +63,7 @@ public class UserService {
             throw new RejectedExecutionException();
         }
         user.setPassword(passwordRequestDto.getNewpassword());
+        userRepository.save(user);
     }
 
     @Transactional
