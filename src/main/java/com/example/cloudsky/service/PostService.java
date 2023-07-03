@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @Service
 public class PostService {
@@ -27,6 +29,11 @@ public class PostService {
         // 해당 post를 responseDto에 담아서 반환
         return new PostResponseDto(post);
     } // 선택한 게시글 조회
+
+    // 게시글 목록 조회
+    public List<Post> getAllPosts() {
+        return postRepository.findAll();
+    }
 
     // 게시글 생성하기
     public PostResponseDto createPost(PostRequestDto requestDto, User user) {
