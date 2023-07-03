@@ -6,10 +6,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Getter
 @Setter
+@DynamicInsert
+@DynamicUpdate
 @NoArgsConstructor
 @Table(name = "post")
 public class Post extends Timestamped{
@@ -21,6 +25,7 @@ public class Post extends Timestamped{
     private String title;
     @Column(name = "content", nullable = false)
     private String content;
+    @ColumnDefault("0")
     @Column(name = "like_count", nullable = false)
     private Integer likeCount;
     @ManyToOne
@@ -30,7 +35,6 @@ public class Post extends Timestamped{
     public Post(PostRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
-        this.likeCount = 0;
     }
 
     // 게시글 수정 메소드

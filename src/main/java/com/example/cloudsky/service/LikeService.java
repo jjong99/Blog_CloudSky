@@ -32,6 +32,7 @@ public class LikeService {
                 likeRepository.save(like);
                 // 해당 게시글의 likeCount +1
                 post.setLikeCount(post.getLikeCount() + 1);
+                postRepository.save(post);
             }
         }
     }
@@ -42,12 +43,13 @@ public class LikeService {
         User user = userDetails.getUser();
         // 현재 로그인한 사용자가 해당 게시글에 좋아요를 누른 적이 있는지 검사
         if (likeRepository.findByUserAndPost(user, post).isPresent()) {
-            Like like = likeRepository.findByUserAndPost(user, post).orElseThrow(() -> new IllegalArgumentException("이 게시글에 좋아요를 누른 적이 없습니다."));
+            Like like = likeRepository.findByUserAndPost(user, post).orElseThrow(() -> new IllegalArgumentException("이 게시글에 좋아요가 눌러져 있지 않습니다."));
             likeRepository.delete(like);
             // 해당 게시글의 likeCount -1
             post.setLikeCount(post.getLikeCount() - 1);
+            postRepository.save(post);
         } else {
-            throw new IllegalArgumentException("이 게시글에 좋아요를 누른 적이 없습니다.");
+            throw new IllegalArgumentException("이 게시글에 좋아요가 눌러져 있지 않습니다.");
         }
     }
 
