@@ -5,6 +5,7 @@ import com.example.cloudsky.dto.PostResponseDto;
 import com.example.cloudsky.entity.Post;
 import com.example.cloudsky.entity.User;
 import com.example.cloudsky.repository.PostRepository;
+import com.example.cloudsky.security.UserDetailsImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

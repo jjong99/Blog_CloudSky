@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Getter
@@ -20,6 +21,9 @@ public class Post extends Timestamped{
     private String title;
     @Column(name = "content", nullable = false)
     private String content;
+    @Column(name = "like_count", nullable = false)
+    @ColumnDefault("0")
+    private Integer likeCount;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
