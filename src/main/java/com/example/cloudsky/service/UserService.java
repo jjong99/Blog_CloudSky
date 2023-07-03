@@ -39,6 +39,7 @@ public class UserService {
     }
 
 
+    // 프로필 조회
     public ProfileResponseDto getMyPage(User user) {
         return new ProfileResponseDto(user);
     }
@@ -46,19 +47,19 @@ public class UserService {
     // 프로필 수정
     @Transactional
     public ProfileResponseDto updateProfile(User user, ProfileRequestDto profileRequestDto) {
-        user.setRealname(profileRequestDto.getNickname());
+        user.setRealname(profileRequestDto.getRealname());
         user.setIntroduction(profileRequestDto.getIntroduction());
         return new ProfileResponseDto(user);
     }
 
-    @Transactional
     // 비밀번호 변경
-    public void updatePassword(UserDetailsImpl userDetails, PasswordRequestDto password, PasswordRequestDto newpassword) {
+    @Transactional
+    public void updatePassword(UserDetailsImpl userDetails, PasswordRequestDto passwordRequestDto) {
         User user = userDetails.getUser();
 
-        if(!passwordEncoder.matches(password.getPassword(), userDetails.getPassword())) {
+        if(!passwordEncoder.matches(passwordRequestDto.getPassword(), userDetails.getPassword())) {
             throw new RejectedExecutionException();
         }
-        user.setPassword(newpassword.getPassword());
+        user.setPassword(passwordRequestDto.getNewpassword());
     }
 }
