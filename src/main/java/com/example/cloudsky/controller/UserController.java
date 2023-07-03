@@ -20,9 +20,9 @@ public class UserController {
     private final UserService userService;
 
     // 회원가입
-    @PostMapping("/signup")
-    public ResponseEntity<ApiResponseDto> signup(@Valid @RequestBody SignupRequestDto requestDto) {
-        userService.signup(requestDto);
-        return ResponseEntity.status(201).body(new ApiResponseDto("회원가입 성공", HttpStatus.CREATED.value()));
-    }
+//    @PostMapping("/signup")
+//    public ResponseEntity<ApiResponseDto> signup(@Valid @RequestBody SignupRequestDto requestDto) {
+//        userService.signup(requestDto);
+//        return ResponseEntity.status(201).body(new ApiResponseDto("회원가입 성공", HttpStatus.CREATED.value()));
+//    }
 }

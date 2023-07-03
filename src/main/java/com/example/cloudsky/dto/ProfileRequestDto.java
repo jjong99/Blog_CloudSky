@@ -5,6 +5,6 @@ import lombok.Getter;
 
 @Getter
 public class ProfileRequestDto {
-    private String nickname;
+    private String realname;
     private String introduction;
 }
