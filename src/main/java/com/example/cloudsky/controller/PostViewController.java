@@ -26,18 +26,10 @@ public class PostViewController {
     private final PostService postService;
     private final UserService userService;
 
-    @GetMapping("/dev")
-    public String getPostList(Model model) {
+    // 메인 페이지 반환
+    @GetMapping("/")
+    public String getPostList() {
         return "index";
-    }
-
-    // post 내용 반환
-    @GetMapping("/dev/post/{id}")
-    public String getOnePost(@PathVariable Long id, Model model) {
-        Post post = postService.findByPostId(id);
-        model.addAttribute("post", new PostResponseDto(post));
-
-        return "post"; // post.html 뷰 조회
     }
 
     // 로그인 페이지
@@ -64,5 +56,14 @@ public class PostViewController {
     @GetMapping("/dev/user/signup")
     public String signupPage() {
         return "signup";
+    }
+
+    // post 내용 반환
+    @GetMapping("/dev/post/{id}")
+    public String getOnePost(@PathVariable Long id, Model model) {
+        Post post = postService.findByPostId(id);
+        model.addAttribute("post", new PostResponseDto(post));
+
+        return "post"; // post.html 뷰 조회
     }
 }

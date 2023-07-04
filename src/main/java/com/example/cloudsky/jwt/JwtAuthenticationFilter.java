@@ -52,8 +52,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String token = jwtUtil.createToken(username);
         jwtUtil.addJwtToCookie(token, response);
-        // response header에 token 추가
-        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, token);
+        response.sendRedirect("/"); // "/"로 리다이렉트
     }
 
     @Override
