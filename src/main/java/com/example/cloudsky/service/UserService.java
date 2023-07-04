@@ -65,9 +65,4 @@ public class UserService {
         user.setPassword(passwordRequestDto.getNewpassword());
         userRepository.save(user);
     }
-
-    @Transactional
-    public void logout(HttpServletResponse response) {
-        response.reset();
-    }
 }

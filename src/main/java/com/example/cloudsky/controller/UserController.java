@@ -3,7 +3,8 @@ package com.example.cloudsky.controller;
 import com.example.cloudsky.dto.ApiResponseDto;
 import com.example.cloudsky.dto.SignupRequestDto;
 import com.example.cloudsky.service.UserService;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,8 +29,9 @@ public class UserController {
     }
 
     @RequestMapping("/logout")
-    public ResponseEntity<ApiResponseDto> logout(HttpServletResponse response) {
-        userService.logout(response);
+    public ResponseEntity<ApiResponseDto> logout(HttpServletRequest request) {
+        HttpSession httpsession = request.getSession();
+        httpsession.invalidate();
         return ResponseEntity.status(201).body(new ApiResponseDto("로그아웃 성공", HttpStatus.CREATED.value()));
     }
 }
