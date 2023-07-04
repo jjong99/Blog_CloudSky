@@ -39,7 +39,6 @@ public class UserService {
         userRepository.save(user);
     }
 
-
     // 프로필 조회
     public ProfileResponseDto getMyPage(User user) {
         return new ProfileResponseDto(user);
@@ -54,7 +53,7 @@ public class UserService {
         return new ProfileResponseDto(user);
     }
 
-    // 비밀번호 변경
+    /// 비밀번호 변경
     @Transactional
     public void updatePassword(UserDetailsImpl userDetails, PasswordRequestDto passwordRequestDto) {
         User user = userDetails.getUser();
