@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpHeaders;
 
+
 @RestController
 @RequestMapping("/dev")
 public class PostController {
@@ -25,12 +26,20 @@ public class PostController {
         this.postService = postService;
     }
 
-
     // 선택 게시글 조회
 //    @GetMapping("/post/{id}")
 //    public PostResponseDto getOnePost(@PathVariable Long id) {
 //        return postService.getOnePost(id);
 //    }
+
+    // 게시글 목록 조회
+    @GetMapping("/post")
+    public List<PostResponseDto> getAllPosts() {
+        List<Post> posts = postService.getAllPosts();
+        return posts.stream()
+                .map(PostResponseDto::new)
+                .collect(Collectors.toList());
+    }
 
     // 게시글 작성
     @PostMapping("/post")
