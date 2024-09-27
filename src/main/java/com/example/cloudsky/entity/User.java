@@ -1,5 +1,7 @@
 package com.example.cloudsky.entity;
+
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,10 +14,12 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Table(name = "users")
+@EqualsAndHashCode
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
 
     @Column(name = "username", nullable = false, unique = true)
@@ -30,8 +34,8 @@ public class User {
     @Column(name = "introduction")
     private String introduction;
 
-    @OneToMany(mappedBy = "user")
-    private List<Post> postList = new ArrayList<>();
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private List<Post> postList;
 
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)

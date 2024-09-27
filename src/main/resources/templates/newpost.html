@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cloud Sky</title>
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/2675/2675848.png" />
+
+  <script>
+    // 삭제 기능
+    const deleteButton = document.getElementById('delete-btn');
+
+    if (deleteButton) {
+      deleteButton.addEventListener('click', event => {
+        let id = document.getElementById('article-id').value;
+        fetch(`/dev/post/${id}`, {
+          method: 'DELETE'
+        })
+                .then(() => {
+                  alert('삭제가 완료되었습니다.');
+                  location.replace('/post');
+                });
+      });
+    }
+    /* HTML에서 id를 delete-btn로 설정한 엘리먼트를 찾아 그 엘리먼트에서 클릭 이벤트가 발생하면
+    fetch() 메서드를 통해 /api/articles/DELETE 요청을 보내는 역할을 함
+    fetch() 메서드에 이어지는 then() 메서드는 fetch()가 잘 완료되면 연이어 실행되는 메서드
+    alert() 메서드는 then() 메서드가 실행되는 시점에 웹 브라우저 화면으로 삭제가 완료됨을 알리는 팝업을 띄워주는 메서드
+    location.replace()메서드는 실행 시 사용자의 웹 브라우저 화면을 현재 주소를 기반해 옮겨주는 역할을 함 */
+
+    // 수정 기능
+    const modifyButton = document.getElementById('modify-btn');
+
+    if (modifyButton) {
+      modifyButton.addEventListener('click', event => {
+        let params = new URLSearchParams(location.search);
+        let id = params.get('id');
+
+        fetch(`/dev/post/${id}`, {
+          method: 'PUT',
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title: document.getElementById('title').value,
+            content: document.getElementById('content').value
+          })
+        })
+                .then(() => {
+                  alert('수정이 완료되었습니다.');
+                  location.replace(`/post/${id}`);
+                });
+      });
+    }
+
+    // 생성 기능
+    const createButton = document.getElementById('create-btn');
+
+    if (createButton) {
+      createButton.addEventListener('click', event => {
+        fetch('/dev/post', {
+          method: 'POST',
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title: document.getElementById('title').value,
+            content: document.getElementById('content').value
+          })
+        })
+                .then(() => {
+                  alert('등록 완료되었습니다.');
+                  location.replace('/post');
+                });
+      });
+    }
+  </script>
+
+  <style>
+    * {
+      font-family: "Poppins", sans-serif;
+    }
+
+    textarea::-webkit-scrollbar {
+      width: 8px;  /* 스크롤바의 너비 */
+    }
+
+    textarea::-webkit-scrollbar-thumb {
+      height: 30%; /* 스크롤바의 길이 */
+      background: #217af4; /* 스크롤바의 색상 */
+      border-radius: 10px;
+    }
+
+    textarea::-webkit-scrollbar-track {
+      background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
+    }
+
+    html, body{
+      width: 100%;
+      height:  100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      color: #000000;
+    }
+
+    .section .colour {
+      position: absolute;
+      filter: blur(150px);
+    }
+
+    .section .colour:nth-child(1) {
+      top: -350px;
+      width: 600px;
+      height: 600px;
+      background: #9AC5F4;
+    }
+
+    .section .colour:nth-child(2) {
+      left: 100px;
+      width: 500px;
+      height: 500px;
+      bottom: -150px;
+      background: #99DBF5;
+    }
+
+    .section .colour:nth-child(3) {
+      right: 100px;
+      bottom: 50px;
+      width: 300px;
+      height: 300px;
+      background: #A7ECEE;
+    }
+
+    h1 {
+      margin: 0;
+    }
+
+    .header{
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 25%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: transparent;
+      flex-direction: column;
+    }
+
+    @keyframes floatClouds {
+      0% , 100%{
+        transform: translateX(-50px);
+      }
+
+      50% {
+        transform: translateX(50px);
+      }
+    }
+
+    /* Apply cloud animation to multiple clouds */
+    .cloud1 { top: 35px; left: 10%; }
+    .cloud2 { top: 100px; left: 15%; }
+    .cloud3 { top: 20px; left: 40%; }
+    .cloud4 { top: 80px; right: 5%; }
+    .cloud5 { top: 150px; right: 30%; }
+
+    .title1 {
+      font-size: 40px;
+      color: #0096FF;
+      text-shadow: 0px 0px 20px #C3F8FF;
+      position: relative;
+      animation:ani 1s infinite alternate;
+    }
+
+    .title2 {
+      position: relative;
+      font-size: 20px;
+    }
+
+    .title2 > span {
+      position: relative;
+      color: #ABD9FF;
+      animation:ani 1s infinite alternate;
+    }
+
+    @keyframes ani{
+      0%{transform:translate(0,0);}
+      100%{transform:translate(0,5px);}
+    }
+
+
+    .header > div:nth-child(6),
+    .header > div:nth-child(7) {
+      width: 100%;
+      text-align: center;
+    }
+
+    .line {
+      margin:0;
+      width: 100%;
+      height: 0.5%;
+      background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+      background-size: 400% 400%;
+      opacity: 0.2;
+      animation: gradient 15s ease infinite;
+    }
+
+    @keyframes gradient {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .bottom {
+      margin-top: 0;
+      width: 100%;
+      background-color: transparent;
+      align-items: center;
+      justify-self: center;
+      height: 74.5%;
+      color: white;
+      display: flex;
+      flex-direction: column; /* 수정된 부분 */
+    }
+
+    button {
+      padding: 8px 24px; /* 수정된 버튼의 크기 */
+      border-radius: 5px;
+      cursor: pointer;
+      color: #19376D;
+      font-size: 18px;
+      transition: all 0.3s ease;
+      position: relative;
+      background: #C3F8FF;
+      opacity: 0.8;
+      border: none;
+      z-index: 1;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    button::after {
+      position: absolute;
+      content: "";
+      width: 0;
+      height: 100%;
+      top: 0;
+      right: 0;
+      z-index: -1;
+      background-color: #AEE2FF;
+      border-radius: 5px;
+      box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+      7px 7px 20px 0px rgba(0,0,0,.1),
+      4px 4px 5px 0px rgba(0,0,0,.1);
+      transition: all 0.3s ease;
+    }
+
+    button:hover:after {
+      left: 0;
+      width: 100%;
+    }
+
+
+    .logoutbtn {
+      width: 66%;
+      height: 15%;
+      margin-top: 10px auto 0px;
+      align-items: center;
+      display: flex;
+      justify-items: center;
+      text-align: right;
+      justify-content: flex-end;
+    }
+
+    .row {
+      align-items: center;
+      justify-self: center;
+      margin-top: 10px;
+      width: 80%;
+      height: 74.5%;
+      padding: 20px;
+      display: flex;
+      flex-direction: column; /* 수정된 부분 */
+    }
+
+    article{
+      width: 80%;
+      min-height: 450px;
+      height: 85%;
+      padding: 20px;
+      border-radius: 20px;
+      backdrop-filter: blur(5px);
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0px 25px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      overflow: hidden;
+      color: #000;
+      display: flex;
+      justify-self: center;
+    }
+
+    .bottompost{
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .buttons{
+      position: fixed;
+      bottom: 20px;
+      height: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    button:nth-child(1) {
+      margin-right: 20px;
+    }
+
+    .form-control{
+      width: 100%;;
+    }
+
+    .input {
+      flex-direction: column;
+      display: flex;
+      justify-self: center;
+      align-items: center;
+      width: 100%;
+      height: 90%;
+    }
+
+    .input input,
+    .input textarea {
+      width: 100%; /* input 요소의 너비를 100%로 설정 */
+    }
+
+    input {
+      font-size: 18px;
+      color: #222222;
+      width: 100%;
+      border: none;
+      border-bottom: solid #aaaaaa 1px;
+      padding-bottom: 10px;
+      padding-left: 10px;
+      position: relative;
+      background: none;
+      z-index: 5;
+      margin-bottom: 15px;
+      margin-top: 15px;
+    }
+
+    input:focus { outline: none; }
+
+    textarea{
+      border: none;
+      font-size: 16px;
+      padding: 10px;
+      resize: none;
+      background:transparent;
+      height: 100%;
+    }
+
+
+    textarea:focus {   outline: none; }
+
+    header, section {
+      width: 80%;
+    }
+  </style>
+</head>
+<body>
+<div class="section">
+  <div class="colour"></div>
+  <div class="colour"></div>
+  <div class="colour"></div>
+</div>
+
+
+<div class="header">
+  <div class="cloud cloud1"></div>
+  <div class="cloud cloud2"></div>
+  <div class="cloud cloud3"></div>
+  <div class="cloud cloud4"></div>
+  <div class="cloud cloud5"></div>
+  <div><h1 class="title1">Cloud Sky</h1></div>
+  <div><h4 class="title2"><span>☁</span> 환영합니다 <span>☁</span></h4></div>
+</div>
+
+<div class = "line"> </div>
+
+
+<div class="bottom">
+  <div class = "logoutbtn">
+    <button id="logoutbtn" href = "#"  onclick="location.href='/dev/post'">
+      로그아웃
+    </button>
+  </div>
+
+  <div class="row">
+    <div class="bottompost">
+      <article>
+        <input type="hidden" id="post-id" th:value="${post.id}">
+        <div class="input">
+          <header class="mb-4">
+            <input type="text" class="form-control" placeholder="제목" id="title" th:value="${post.title}">
+          </header>
+          <section class="mb-5">
+            <textarea class="form-control h-25" rows="10" placeholder="내용" id="content" th:text="${post.content}"></textarea>
+          </section>
+        </div>
+        <div class="buttons">
+          <button th:if="${post.id} != null" type="button" id="modify-btn" class="btn btn-primary btn-sm">수정</button>
+          <button th:if="${post.id} == null" type="button" id="create-btn" class="btn btn-primary btn-sm">등록</button>
+        </div>
+      </article>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
